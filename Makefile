@@ -1,7 +1,7 @@
 # Composer
 
-.PHONY: composer-install composer-update composer-install-dev composer-dump-auto
-.SILENT: composer-install composer-update composer-install-dev composer-dump-auto
+.PHONY: composer-install composer-update composer-install-dev composer-dump-auto composer-add-dep composer-add-dev-dep
+.SILENT: composer-install composer-update composer-install-dev composer-dump-auto composer-add-dep composer-add-dev-dep
 
 composer-install:
 	docker run --rm \
@@ -29,6 +29,20 @@ composer-dump-auto:
 	--volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))):/app \
 	--user $(id -u):$(id -g) \
 	xediltd/composer dump-autoload
+	rm -f auth.json
+
+composer-add-dep:
+	docker run --rm --interactive --tty \
+	--volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))):/app \
+	--user $(id -u):$(id -g) \
+	xediltd/composer /bin/bash -ci "composer require $(module) $(version) --ignore-platform-reqs --no-scripts"
+	rm -f auth.json
+
+composer-add-dev-dep:
+	docker run --rm --interactive --tty \
+	--volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))):/app \
+	--user $(id -u):$(id -g) \
+	xediltd/composer /bin/bash -ci "composer require $(module) $(version) --dev --ignore-platform-reqs --no-scripts"
 	rm -f auth.json
 
 # Static Analysis

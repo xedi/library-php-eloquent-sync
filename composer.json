@@ -3,12 +3,15 @@
     "description": "Adds Sync functionality to hasMany relations",
     "type": "library",
     "require": {
-        "php": "^7.1.3"
+        "php": "^7.1.3",
+        "illuminate/support": "^5.8",
+        "illuminate/database": "^5.8"
     },
     "require-dev": {
         "phpunit/phpunit": "^7.5",
         "squizlabs/php_codesniffer": "^3.4",
-        "mockery/mockery": "^1.2"
+        "mockery/mockery": "^1.2",
+        "orchestra/testbench": "^3.5"
     },
     "license": "MIT",
     "authors": [
