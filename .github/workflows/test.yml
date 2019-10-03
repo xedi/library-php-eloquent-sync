@@ -1,0 +1,21 @@
+name: Unit Testing
+
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Docker login
+        uses: azure/container-actions/docker-login@master
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Installing Dependencies
+        shell: bash
+        run: make -f ci.Makefile composer-install
+      - name: Testing for Errors
+        shell: bash
+        run: make -f ci.Makefile phpunit

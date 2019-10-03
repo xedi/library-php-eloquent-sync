@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    @see https://github.com/squizlabs/PHP_CodeSniffer/wiki/Advanced-Usage#using-a-default-configuration-file
+    @see https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master/phpcs.xml.dist
+ -->
+<ruleset name="BasicSync">
+    <description>The coding standard for Xedi\Eloquent-Basic-Sync</description>
+    <file>lib</file>
+    <file>tests</file>
+
+    <rule ref="PSR12"></rule>
+    <rule ref="PSR2.Files.EndFileNewline"/>
+    <rule ref="Generic.Commenting">
+        <exclude-pattern>*/tests/*</exclude-pattern>
+    </rule>
+    <rule ref="PEAR.Commenting">
+        <exclude name="PEAR.Commenting.FileComment.Missing" />
+        <exclude name="PEAR.Commenting.ClassComment.MissingCategoryTag" />
+        <exclude name="PEAR.Commenting.ClassComment.MissingLicenseTag" />
+        <exclude name="PEAR.Commenting.ClassComment.MissingLinkTag" />
+        <exclude-pattern>*/tests/*</exclude-pattern>
+    </rule>
+</ruleset>
