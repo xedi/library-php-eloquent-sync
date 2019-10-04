@@ -82,7 +82,7 @@ class SyncEntities
             // Note: This method of destroying will not fire an events or support soft-deletes
             $this->getRelated()->destroy($delete_ids);
 
-            $changes['deleted'] = $this->castKeys($delete_id);
+            $changes['deleted'] = $this->castKeys($delete_ids);
         }
 
         // Update the updateable rows
