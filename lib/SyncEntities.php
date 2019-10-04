@@ -58,7 +58,7 @@ class SyncEntities
         $new_rows = [];
 
         foreach ($data as $row) {
-            if ($this->isUpdateable($row, $current)) {
+            if ($this->isUpdateable($row, $related_key_name, $current)) {
                 $id = $row[$related_key_name];
                 $update_rows[$id] = $row;
             } else {
@@ -71,10 +71,10 @@ class SyncEntities
         // `$related_key_name` (typically 'id')
         $update_ids = array_keys($update_rows);
         $delete_ids = array_filter(
+            $current,
             function ($current_id) use ($update_ids) {
                 return ! in_array($current_id, $update_ids);
-            },
-            $current
+            }
         );
 
         // Delete any non-matching rows
@@ -87,7 +87,8 @@ class SyncEntities
 
         // Update the updateable rows
         foreach ($update_rows as $id => $row) {
-            $this->getRelated()->where($related_key_name, $id)
+            $this->getRelated()
+                ->where($related_key_name, $id)
                 ->update($row);
         }
 
@@ -118,7 +119,9 @@ class SyncEntities
     private function castKeys(array $keys): array
     {
         return (array) array_map(
-            $this->castKey,
+            function ($key) {
+                return $this->castKey($key);
+            },
             $keys
         );
     }
@@ -147,6 +150,10 @@ class SyncEntities
      */
     private function isUpdateable($row, $related_key_name, $current): bool
     {
+        if (! array_key_exists($related_key_name, $row)) {
+            return false;
+        }
+
         $key = $row[$related_key_name];
 
         return isset($key) &&
