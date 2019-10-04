@@ -12,7 +12,7 @@ use Xedi\BasicSync\SyncEntities;
  * @package Xedi\BasicSync
  * @author  Chris Smith <chris@xedi.com>
  */
-class BasicSyncServiceProvider extends ServiceProvider
+class HasManyServiceProvider extends ServiceProvider
 {
     /**
      * Mixin the sync method
