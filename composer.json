@@ -1,6 +1,6 @@
 {
-    "name": "xedi/eloquent-basic-sync",
-    "description": "Adds Sync functionality to hasMany relations",
+    "name": "xedi/eloquent-sync",
+    "description": "Adds Sync functionality to eloquent relations",
     "type": "library",
     "require": {
         "php": "^7.1.3",
@@ -27,7 +27,7 @@
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
-            "Xedi\\BasicSync\\": "lib/"
+            "Xedi\\Eloquent\\Sync\\": "lib/"
         }
     },
     "autoload-dev": {

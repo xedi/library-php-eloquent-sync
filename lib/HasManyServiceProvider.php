@@ -1,13 +1,13 @@
 <?php
 
-namespace Xedi\BasicSync;
+namespace Xedi\Eloquent\Sync;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Xedi\BasicSync\SyncEntities;
+use Illuminate\Support\ServiceProvider;
+use Xedi\Eloquent\Sync\SyncEntities;
 
 /**
- * Register the BasicSync Macro with the HasMany Relationship
+ * Register the sync Macro with the HasMany Relationship
  *
  * @package Xedi\BasicSync
  * @author  Chris Smith <chris@xedi.com>

@@ -1,6 +1,6 @@
 <?php
 
-namespace Xedi\BasicSync;
+namespace Xedi\Eloquent\Sync;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Traits\ForwardsCalls;
@@ -8,7 +8,7 @@ use Illuminate\Support\Traits\ForwardsCalls;
 /**
  * Hosts the Sync method which gets mixed into the Relationship class
  *
- * @package Xedi\BasicSync
+ * @package Xedi\Eloquent\Sync
  * @author  Chris Smith <chris@xedi.com>
  */
 class SyncEntities
