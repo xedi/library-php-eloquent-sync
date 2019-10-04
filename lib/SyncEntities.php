@@ -97,7 +97,7 @@ class SyncEntities
         // insert the new rows
         $new_ids = array_map(
             function ($row) use ($related_key_name) {
-                $newModel = $this->create($row);
+                $new_model = $this->create($row);
 
                 return $new_model->$related_key_name;
             },
