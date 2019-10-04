@@ -2,14 +2,31 @@
 
 namespace Xedi\BasicSync;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Traits\ForwardsCalls;
+
 /**
  * Hosts the Sync method which gets mixed into the Relationship class
  *
  * @package Xedi\BasicSync
  * @author  Chris Smith <chris@xedi.com>
  */
-class SyncMixin
+class SyncEntities
 {
+    use ForwardsCalls;
+
+    private $relation;
+
+    /**
+     * New SyncEntities
+     *
+     * @param Relation $relation Relation to Sync
+     */
+    public function __construct(Relation $relation)
+    {
+        $this->relation = $relation;
+    }
+
     /**
      * Sync the relationships with a list of models
      *
@@ -18,7 +35,7 @@ class SyncMixin
      *
      * @return array
      */
-    public function sync($data, $deleting = true)
+    public function handle($data, $deleting = true)
     {
         $changes = [
             'created' => [],
@@ -26,12 +43,15 @@ class SyncMixin
             'updated' => [],
         ];
 
-        $related_key_name = $this->related->getKeyName();
+        $related_key_name = $this->getRelated()
+            ->getKeyName();
 
         // First we need to attach of the associated models that are not currently
         // in the child entity table. We'll spin through the given IDs, checking to see
         // if they exist in the array of current ones, and if not we will insert.
-        $current = $this->newQuery()->pluck($related_key_name)->all();
+        $current = $this->newQuery()
+            ->pluck($related_key_name)
+            ->all();
 
         // Separate the submitted data into "update" and "new"
         $update_rows = [];
@@ -132,5 +152,24 @@ class SyncMixin
         return isset($key) &&
             ! is_empty($key) &&
             in_array($key, $current);
+    }
+
+    /**
+     * Dynamically handle calls into the query instance.
+     *
+     * @param string $method     Name of the method to run
+     * @param array  $parameters Parameters to pass-through
+     *
+     * @return mixed
+     */
+    public function __call(string $method, array $parameters)
+    {
+        $result = $this->forwardCallTo($this->relation, $method, $parameters);
+
+        if ($result === $this->relation) {
+            return $this;
+        }
+
+        return $result;
     }
 }
