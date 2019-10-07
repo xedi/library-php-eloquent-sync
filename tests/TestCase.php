@@ -19,7 +19,15 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
 
+        $this->setUpSQLlite();
         $this->loadMigrationsFrom(__DIR__ . '/Database/Migrations');
         $this->withFactories(__DIR__ . '/Factories');
+    }
+
+    protected function setUpSQLlite()
+    {
+        if (! file_exists($file = config('database.connections.sqlite.database'))) {
+            fopen($file, 'c+');
+        }
     }
 }
