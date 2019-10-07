@@ -157,7 +157,7 @@ class SyncEntities
         $key = $row[$related_key_name];
 
         return isset($key) &&
-            ! is_empty($key) &&
+            ! empty($key) &&
             in_array($key, $current);
     }
 
