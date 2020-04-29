@@ -7,7 +7,7 @@ composer-install:
 	docker run --rm \
 	--volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))):/app \
 	--user $(id -u):$(id -g) \
-	xediltd/composer install --ignore-platform-reqs --no-scripts --no-progress
+	composer install --ignore-platform-reqs --no-scripts --no-progress
 	rm -f auth.json
 
 # Static Analysis
