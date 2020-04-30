@@ -1,7 +1,7 @@
 update_configs:
 - automerged_updates:
   - match: {dependency_type: development, update_type: all}
-  - match: {dependency_type: production, update_type: 'semver:patch'}
+  - match: {dependency_type: production, update_type: 'semver:minor'}
   default_reviewers: [Smudge3806,CallumEddisford]
   directory: /
   package_manager: php:composer
