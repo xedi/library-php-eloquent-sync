@@ -1,7 +1,7 @@
 # Composer
 
-.PHONY: composer-install composer-update composer-install-dev composer-dump-auto composer-add-dep composer-add-dev-dep
-.SILENT: composer-install composer-update composer-install-dev composer-dump-auto composer-add-dep composer-add-dev-dep
+.PHONY: composer-install composer-update composer-install-dev composer-dump-auto composer-add-dep composer-add-dev-dep composer-interactive
+.SILENT: composer-install composer-update composer-install-dev composer-dump-auto composer-add-dep composer-add-dev-dep composer-interactive
 
 composer-install:
 	docker run --rm \
@@ -43,6 +43,13 @@ composer-add-dev-dep:
 	--volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))):/app \
 	--user $(id -u):$(id -g) \
 	composer /bin/bash -ci "composer require $(module) $(version) --dev --ignore-platform-reqs --no-scripts"
+	rm -f auth.json
+
+composer-interactive:
+	docker run --rm --interactive --tty \
+	--volume $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))):/app \
+	--user $(id -u):$(id -g) \
+	composer /bin/bash
 	rm -f auth.json
 
 # Static Analysis
