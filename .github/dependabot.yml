@@ -1,0 +1,34 @@
+version: 2
+registries:
+  git-github-com:
+    type: git
+    url: https://github.com
+    username: x-access-token
+    password: "${{secrets.GIT_GITHUB_COM_PASSWORD}}"
+  git-http-basic-nova-laravel-com:
+    type: git
+    url: https://http-basic.nova.laravel.com
+    username: ryan@xedi.com
+    password: "${{secrets.GIT_HTTP_BASIC_NOVA_LARAVEL_COM_PASSWORD}}"
+  composer-repository-satis-xedi-com:
+    type: composer-repository
+    url: https://satis.xedi.com
+    username: xedi
+    password: "${{secrets.COMPOSER_REPOSITORY_SATIS_XEDI_COM_PASSWORD}}"
+
+updates:
+- package-ecosystem: composer
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "22:00"
+  open-pull-requests-limit: 10
+  target-branch: master
+  reviewers:
+  - Smudge3806
+  - CallumEddisford
+  versioning-strategy: lockfile-only
+  registries:
+  - composer-repository-satis-xedi-com
+  - git-github-com
+  - git-http-basic-nova-laravel-com
